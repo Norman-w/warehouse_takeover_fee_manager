@@ -24,12 +24,12 @@ class LoginScreen extends StatelessWidget {
     });
   }
 
-  Future<String?> _signupUser(SignupData data) {
-    debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
+  // Future<String?> _signupUser(SignupData data) {
+  //   debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
+  //   return Future.delayed(loginTime).then((_) {
+  //     return null;
+  //   });
+  // }
 
   Future<String> _recoverPassword(String name) {
     debugPrint('Name: $name');
@@ -47,14 +47,20 @@ class LoginScreen extends StatelessWidget {
       userType: LoginUserType.name,
       userValidator:(value){
         if(value == null || value.length<3) {
-        return "invalid user name";
+        return "无效的用户名";
       } else {
         return null;
       }},
       title: 'ENNI E-Commerce',
       logo: const AssetImage('assets/images/enni.png'),
       onLogin: _authUser,
-      onSignup: _signupUser,
+      // onSignup: _signupUser,
+      hideForgotPasswordButton: true,
+      messages: LoginMessages(
+        userHint:'用户名',
+        passwordHint:'密码',
+          loginButton:"登录",
+      ),
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const Scaffold(
