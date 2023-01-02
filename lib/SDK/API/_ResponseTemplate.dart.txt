@@ -1,0 +1,27 @@
+// ignore_for_file: non_constant_identifier_names, file_names
+
+import 'package:json_annotation/json_annotation.dart';
+import '../../Model/ModelTemplate.dart';
+import '../../BaseResponse.dart';
+
+part 'ResponseTemplate.g.dart';
+
+@JsonSerializable()
+// 仓储托管账单查询接口
+class ResponseTemplate extends BaseResponse {
+
+  bool? Success;
+
+  bool? Session;
+
+  ModelTemplate? ModelTemplate;
+
+  ResponseTemplate();
+
+  factory ResponseTemplate.fromJson(
+      Map<String, dynamic> json) =>
+      _$ResponseTemplateFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$ResponseTemplateToJson(this);
+}

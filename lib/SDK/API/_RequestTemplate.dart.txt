@@ -1,0 +1,42 @@
+// ignore_for_file: non_constant_identifier_names, file_names
+import 'package:json_annotation/json_annotation.dart';
+import '../../BaseRequest.dart';
+import 'ResponseTemplate.dart';
+
+part 'RequestTemplate.g.dart';
+
+@JsonSerializable()
+// api的代码提示名称
+class RequestTemplate
+    extends BaseRequest<ResponseTemplate> {
+  String? NickMobileId;
+  String? Pass;
+  String? Clint;
+  String? AppCode;
+  String? SessionType;
+
+  RequestTemplate();
+
+  factory RequestTemplate.fromJson(
+      Map<String, dynamic> json) =>
+      _$RequestTemplateFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$RequestTemplateToJson(this);
+
+  @override
+  getParameters() {
+    var json = toJson();
+    return json;
+  }
+
+  @override
+  parseResponse(rspJsonObj) {
+    return ResponseTemplate.fromJson(rspJsonObj);
+  }
+
+  @override
+  getApiName() {
+    return "这里替换成api名称/编码";
+  }
+}

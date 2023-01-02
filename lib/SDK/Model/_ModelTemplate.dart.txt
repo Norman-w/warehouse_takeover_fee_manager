@@ -1,0 +1,20 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Template.g.dart';
+@JsonSerializable()
+//示例类名
+class Template {
+  /// 示例字段
+  int? Id;
+  Template(
+      {
+        this.Id
+      }
+      );
+  factory Template.fromJson(Map<String, dynamic> json) => _$TemplateFromJson(json);
+
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$TemplateToJson(this);
+}
