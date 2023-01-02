@@ -13,10 +13,10 @@ class SDKClient
 {
   //全局变量
   final String url;
-  final DateTime timeout;
+  Duration? timeout;
 
   //构造函数
-  SDKClient(this.url, this.timeout);
+  SDKClient(this.url, {this.timeout});
   Future<T> execute<T extends BaseResponse>({required BaseRequest<T> request, String? session,Method? method}) async {
     var uri = buildGetUri(request, session);
     print('get请求的uri');print(uri);
