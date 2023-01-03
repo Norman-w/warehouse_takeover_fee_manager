@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:provider/provider.dart';
 import 'package:warehouse_takeover_fee_manager/SDK/API/User/AccountLoginByPassRequest.dart';
 import 'package:warehouse_takeover_fee_manager/SDK/SDKClient.dart';
+import 'package:warehouse_takeover_fee_manager/common/global.dart';
 
 const users = {
   'admin': 'admin',
@@ -15,7 +17,7 @@ class LoginScreen extends StatelessWidget {
 
   Duration get loginTime => const Duration(milliseconds: 2250);
 
-  Future<String?> _authUser(LoginData data) {
+  Future<String?> _authUser(LoginData data,BuildContext context) {
     var req = AccountLoginByPassRequest();
     req.NickMobileId = data.name;
     req.Pass = data.password;
@@ -24,6 +26,7 @@ class LoginScreen extends StatelessWidget {
       var session = res.Session;
       if(session!= null && session.isNotEmpty)
         {
+          context.read<AccountModel>().account = res.account;
           return null;
         }
       else
@@ -62,7 +65,7 @@ class LoginScreen extends StatelessWidget {
       }},
       title: 'ENNI E-Commerce',
       logo: const AssetImage('assets/images/enni.png'),
-      onLogin: _authUser,
+      onLogin: (data){return _authUser(data,context);},
       // onSignup: _signupUser,
       hideForgotPasswordButton: true,
       messages: LoginMessages(
@@ -73,9 +76,9 @@ class LoginScreen extends StatelessWidget {
       ),
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const Scaffold(
+          builder: (context) => Scaffold(
             body: Center(
-              child: Text('hello!'),
+              child: Text('hello! ''${context.watch<AccountModel>().account?.Name}'),
             ),
           ),
         ));
