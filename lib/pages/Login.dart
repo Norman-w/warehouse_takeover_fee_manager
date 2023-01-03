@@ -57,6 +57,7 @@ class LoginScreen extends StatelessWidget {
       // onSignup: _signupUser,
       hideForgotPasswordButton: true,
       messages: LoginMessages(
+        flushbarTitleError: '错误',
         userHint:'用户名',
         passwordHint:'密码',
           loginButton:"登录",
