@@ -40,6 +40,9 @@ dependencies:
   json_annotation: ^4.7.0
   flutter_login: ^4.1.1
   provider: ^6.0.5
+  excel: ^2.0.1
+  syncfusion_flutter_datagrid: ^20.4.41
+  file_selector_macos: ^0.9.0+3
 
 dev_dependencies:
   flutter_test:
