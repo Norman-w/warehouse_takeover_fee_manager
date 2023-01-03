@@ -5,6 +5,8 @@ import 'package:warehouse_takeover_fee_manager/SDK/API/User/AccountLoginByPassRe
 import 'package:warehouse_takeover_fee_manager/SDK/SDKClient.dart';
 import 'package:warehouse_takeover_fee_manager/common/global.dart';
 
+import 'home.dart';
+
 const users = {
   'admin': 'admin',
   'test': 'test',
@@ -22,17 +24,17 @@ class LoginScreen extends StatelessWidget {
     req.NickMobileId = data.name;
     req.Pass = data.password;
     var rsp = sdkClient.execute(request: req);
-    return rsp.then((res){
+    return rsp.then((res) {
       var session = res.Session;
-      if(session!= null && session.isNotEmpty)
-        {
-          context.read<AccountModel>().account = res.account;
-          return null;
-        }
-      else
-        {
-          return "登录失败,请检查用户名密码";
-        }
+      if (session != null && session.isNotEmpty) {
+        var model = context.read<AccountModel>();
+        model.account = res.account;
+        model.session = session;
+        return null;
+      }
+      else {
+        return "登录失败,请检查用户名密码";
+      }
     });
   }
 
@@ -78,7 +80,8 @@ class LoginScreen extends StatelessWidget {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => Scaffold(
             body: Center(
-              child: Text('hello! ''${context.watch<AccountModel>().account?.Name}'),
+              child: Home(),
+              // child: Text('hello! ''${context.watch<AccountModel>().account?.Name}'),
             ),
           ),
         ));
