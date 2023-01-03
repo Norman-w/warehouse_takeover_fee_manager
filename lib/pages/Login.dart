@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:warehouse_takeover_fee_manager/SDK/API/User/AccountLoginByPassRequest.dart';
+import 'package:warehouse_takeover_fee_manager/SDK/SDKClient.dart';
 
 const users = {
   'admin': 'admin',
   'test': 'test',
 };
+
+var sdkClient = SDKClient("https://enni.group/netserver/router.aspx?");
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,15 +16,20 @@ class LoginScreen extends StatelessWidget {
   Duration get loginTime => const Duration(milliseconds: 2250);
 
   Future<String?> _authUser(LoginData data) {
-    debugPrint('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
-      }
-      return null;
+    var req = AccountLoginByPassRequest();
+    req.NickMobileId = data.name;
+    req.Pass = data.password;
+    var rsp = sdkClient.execute(request: req);
+    return rsp.then((res){
+      var session = res.Session;
+      if(session!= null && session.isNotEmpty)
+        {
+          return null;
+        }
+      else
+        {
+          return "登录失败,请检查用户名密码";
+        }
     });
   }
 
