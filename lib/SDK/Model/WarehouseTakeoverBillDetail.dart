@@ -26,6 +26,9 @@ class WarehouseTakeoverBillDetail {
   /// </summary>
   final int SellerId;
 
+  ///被托管的UserId
+  final int Assignor;
+
   /// <summary>
   /// 包裹创建时间
   /// </summary>
@@ -86,6 +89,7 @@ class WarehouseTakeoverBillDetail {
         this.Id,
         this.BillId,
         required this.Pid,
+        required this.Assignor,
         required this.SellerId,
         required this.BagCreateTime,
         required this.BagSendTime,

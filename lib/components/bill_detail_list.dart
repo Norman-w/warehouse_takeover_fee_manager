@@ -89,6 +89,12 @@ getDataGridColumns(){
           padding: const EdgeInsets.all(16.0),
           alignment: Alignment.center,
           child: const Text('总件数'))),
+    GridColumn(
+        columnName: '被托管者',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('被托管者'))),
   GridColumn(
       columnName: '卖家',
       width: 120,
@@ -97,24 +103,28 @@ getDataGridColumns(){
           alignment: Alignment.center,
           child: const Text('卖家'))),
   GridColumn(
+      columnWidthMode: ColumnWidthMode.fill,
       columnName: '重量',
       label: Container(
           padding: const EdgeInsets.all(16.0),
           alignment: Alignment.center,
           child: const Text('重量'))),
   GridColumn(
+      columnWidthMode: ColumnWidthMode.fill,
       columnName: '泡重',
       label: Container(
           padding: const EdgeInsets.all(16.0),
           alignment: Alignment.center,
           child: const Text('泡重'))),
   GridColumn(
+      columnWidthMode: ColumnWidthMode.fill,
       columnName: '快递费',
       label: Container(
           padding: const EdgeInsets.all(16.0),
           alignment: Alignment.center,
-          child: const Text('泡重'))),
+          child: const Text('快递费'))),
   GridColumn(
+      columnWidthMode: ColumnWidthMode.fill,
       columnName: '包装费',
       label: Container(
           padding: const EdgeInsets.all(10.0),
@@ -149,6 +159,7 @@ class BillDetailsDataSource extends DataGridSource {
                 DataGridCell(columnName: "快递单号", value: e.WaybillCode),
                 DataGridCell(columnName: "商品种类", value: e.ItemKindCount),
                 DataGridCell(columnName: "总件数", value: e.TotalItemCount),
+                DataGridCell(columnName: "背托管者", value: e.Assignor),
                 DataGridCell(columnName: "卖家", value: e.SellerId),
                 DataGridCell(columnName: "重量", value: e.Weight),
                 DataGridCell(columnName: "泡重", value: e.VolumetricWeight),
@@ -179,11 +190,12 @@ class BillDetailsDataSource extends DataGridSource {
     var waybillCode = cells[4].value.toString();
     var itemKind = cells[5].value.toString();
     var totalCount = cells[6].value.toString();
-    var seller = cells[7].value.toString();
-    var weight = cells[8].value == null ? "-" : cells[7].value.toString();
-    var weight2 = cells[9].value == null ? "-" : cells[8].value.toString();
-    var postFee = cells[10].value == null ? "-" : cells[9].value.toString();
-    var packingFee = cells[11].value == null ? "-" : cells[10].value.toString();
+    var assignor = cells[7].value.toString();
+    var seller = cells[8].value.toString();
+    var weight = cells[9].value == null ? "-" : cells[9].value.toString();
+    var weight2 = cells[10].value == null ? "-" : cells[10].value.toString();
+    var postFee = cells[11].value == null ? "-" : cells[11].value.toString();
+    var packingFee = cells[12].value == null ? "-" : cells[12].value.toString();
     var rowColor = waybillCode.toLowerCase().startsWith(RegExp('[0-9]'))?Colors.white:Colors.black12;
     var highlightColor = const Color.fromARGB(89, 90, 120, 82);
     return DataGridRowAdapter(
@@ -249,6 +261,13 @@ class BillDetailsDataSource extends DataGridSource {
             padding: const EdgeInsets.all(0),
             decoration: int.parse(totalCount)>10?BoxDecoration(color: highlightColor) :null,
             child: Text(totalCount),
+          ),
+          //被托管者
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(0),
+            // decoration: const BoxDecoration(color: Colors.deepOrangeAccent),
+            child: Text(assignor),
           ),
           //卖家
           Container(
