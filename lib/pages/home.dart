@@ -1,15 +1,40 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import '../components/bill_detail_list.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
+import '../components/colorful_loading.dart';
 import '../components/excel_previewer/sheet_previewer_v2.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
+var tabBarItems = const [
+TabItem(icon: Icons.home, title: '托管账单查询'),
+TabItem(icon: Icons.map, title: '物流成本查询'),
+TabItem(icon: Icons.add, title: '上传物流成本'),
+// TabItem(icon: Icons.message, title: 'Message'),
+// TabItem(icon: Icons.people, title: 'Profile'),
+];
+getPage(int pageIndex)
+{
+  switch(pageIndex)
+  {
+    case 0:
+      return const BillDetailList();
+    case 1:
+      return Text('第一页');
+  }
+  return Text('$pageIndex');
+}
 
+class Home extends StatefulWidget {
+  const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
 
-class Home extends StatelessWidget {
-
+class _HomeState extends State<Home> {
   Future<void> _openXlsFile(BuildContext context) async {
     const XTypeGroup typeGroup = XTypeGroup(
       label: 'images',
@@ -23,7 +48,7 @@ class Home extends StatelessWidget {
     }
     // final String fileName = file.name;
     //带文件名和扩展名的完整路径
-    final String filePath = file.path;
+    // final String filePath = file.path;
 
     //调试,显示你打开的文件是什么.
     // await showDialog<void>(
@@ -55,14 +80,14 @@ class Home extends StatelessWidget {
     // }
     var firstSheetKey = excel.tables.keys.toList()[0];
     var firstSheet = excel.tables[firstSheetKey];
-    if(firstSheet!= null)
-    {
-      await showDialog<void>(context: context, builder: (BuildContext context)=>
-          SheetPreviewerV2(sheet: firstSheet,),
+    if (firstSheet != null) {
+      await showDialog<void>(
+        context: context,
+        builder: (BuildContext context) => SheetPreviewerV2(
+          sheet: firstSheet,
+        ),
       );
-    }
-    else
-    {
+    } else {
       print('第一张表是空的???');
     }
   }
@@ -73,44 +98,56 @@ class Home extends StatelessWidget {
     // ignore: deprecated_member_use
     onPrimary: Colors.white,
   );
-
-  Home({super.key});
+  Widget currentPage = getPage(0);
+  //const ColorfulLoading();
 
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('仓储托管费用管理'),
-              ButtonBar(
-                children: [
-                  ElevatedButton(
-                    style: headerBtnStyle,
-                    child: const Text('试算'),
-                    onPressed: () => Navigator.pushNamed(context, '/test2'),
-                  ),
-                  ElevatedButton(
-                    style: headerBtnStyle,
-                    child: const Text('载入表格'),
-                    //这里注意 _openXlsFile 和 _openXlsFile(context) 不一样.前者是直接赋值指针,调用不起来.后者是在回调时调用回调.
-                    onPressed: () => _openXlsFile(context),
-                  ),
-                  // ElevatedButton(
-                  //   style: headerBtnStyle,
-                  //   child: const Text('试算'),
-                  //   onPressed: () => Navigator.pushNamed(context, '/test2'),
-                  // ),
-                  const SizedBox(width: 10,),
-                ],
-              ),
-            ],),
-        ),
-        body: const Center(
-          child:BillDetailList(),
-        ),
-      );
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       const Text('仓储托管费用管理'),
+      //       ButtonBar(
+      //         children: [
+      //           ElevatedButton(
+      //             style: headerBtnStyle,
+      //             child: const Text('试算'),
+      //             onPressed: () => Navigator.pushNamed(context, '/test2'),
+      //           ),
+      //           ElevatedButton(
+      //             style: headerBtnStyle,
+      //             child: const Text('载入表格'),
+      //             //这里注意 _openXlsFile 和 _openXlsFile(context) 不一样.前者是直接赋值指针,调用不起来.后者是在回调时调用回调.
+      //             onPressed: () => _openXlsFile(context),
+      //           ),
+      //           // ElevatedButton(
+      //           //   style: headerBtnStyle,
+      //           //   child: const Text('试算'),
+      //           //   onPressed: () => Navigator.pushNamed(context, '/test2'),
+      //           // ),
+      //           const SizedBox(width: 10,),
+      //         ],
+      //       ),
+      //     ],),
+      // ),
+      body: Center(
+        child: currentPage,
+      ),
+      bottomNavigationBar:
+          //region 底部导航条定义
+          ConvexAppBar(
+        items: tabBarItems,
+// onTap: (int i) => print('click index=$i'),
+        onTap: (int i) {
+          setState(() {
+            currentPage = getPage(i);
+          });
+        },
+      )
+//endregion
+      ,
+    );
   }
 }
