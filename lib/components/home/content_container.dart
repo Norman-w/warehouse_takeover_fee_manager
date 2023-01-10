@@ -53,8 +53,8 @@ class _ContentContainerState extends State<ContentContainer> {
               parentContext: context,
               onClickOpenDrawerBtn: widget.onClickOpenDrawerBtn,
               onDraggableButtonPosChange: (pos, triggerByContainerResize) {
-                print('拖动标志的位置变化了');
-                print(draggableWidgetPosition);
+                // print('拖动标志的位置变化了');
+                // print(draggableWidgetPosition);
                 // setState(() {
                 draggableWidgetPosition = pos;
                 // });
