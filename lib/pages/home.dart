@@ -47,6 +47,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar:
           //region 底部导航条定义
           ConvexAppBar(
+            backgroundColor: Theme.of(context).primaryColor,
         items: tabBarItems,
 // onTap: (int i) => print('click index=$i'),
         onTap: (int i) {
