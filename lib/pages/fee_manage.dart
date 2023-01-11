@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../common/container_with_floating_draggable_btn.dart';
+import '../components/container_with_floating_draggable_btn.dart';
 import '../components/bill_detail_list.dart';
 import '../components/home/search_area.dart';
 
