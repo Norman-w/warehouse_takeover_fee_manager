@@ -26,8 +26,8 @@ WarehouseTakeoverBillDetail _$WarehouseTakeoverBillDetailFromJson(
       VolumetricWeight: (json['VolumetricWeight'] as num?)?.toDouble(),
       WaybillCode: json['WaybillCode'] as String?,
       PostFee: (json['PostFee'] as num?)?.toDouble(),
-      ItemKindCount: json['ItemKindCount'] as int,
-      TotalItemCount: json['TotalItemCount'] as int,
+      ItemKindCount: json['ItemKindCount'] as int?,
+      TotalItemCount: json['TotalItemCount'] as int?,
       PackingFee: (json['PackingFee'] as num?)?.toDouble(),
     );
 

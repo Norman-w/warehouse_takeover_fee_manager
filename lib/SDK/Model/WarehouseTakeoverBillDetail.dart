@@ -72,12 +72,12 @@ class WarehouseTakeoverBillDetail {
   /// <summary>
   /// 商品种类数
   /// </summary>
-  final int ItemKindCount;
+  final int? ItemKindCount;
 
   /// <summary>
   /// 该包裹中总计有多少个商品.
   /// </summary>
-  final int TotalItemCount;
+  final int? TotalItemCount;
 
   /// <summary>
   /// 包装费,也就是仓储托管的费用,要收多少钱,一般的小件都是1元.
