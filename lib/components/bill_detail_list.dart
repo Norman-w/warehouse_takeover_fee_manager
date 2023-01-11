@@ -180,8 +180,19 @@ class BillDetailsDataSource extends DataGridSource {
     // print(createTime);
     var sendTime = cells[3].value.toString();
     var waybillCode = cells[4].value.toString();
-    var itemKind = cells[5].value.toString();
-    var totalCount = cells[6].value.toString();
+    /*
+    发现一个滚动控件调用sfDataGrid的不太好找的问题,提示如下:
+    * The following FormatException was thrown building ScrollViewWidget(dirty, state: _ScrollViewWidgetState#70268):
+    Invalid radix-10 number (at character 1)
+    null
+    *
+    * 因为后台返回的商品种类数和商品总数都是null,所以问题恩本原因出在这里.数据出错了所以红屏了.
+    显示的话value.tostring() 倒是没有关系 因为tostring就是null了.但是对比的时候,使用了int.parse所以出问题了.
+    ^*/
+    var itemKindStr = cells[5].value == null? "0" : cells[5].value.toString();
+    var itemKind = int.tryParse(itemKindStr);
+    var totalCountStr = cells[6].value == null? "0" : cells[6].value.toString();
+    var totalCount = int.tryParse(totalCountStr);
     var assignor = cells[7].value.toString();
     var seller = cells[8].value.toString();
     var weight = cells[9].value == null ? "-" : cells[9].value.toString();
@@ -190,6 +201,7 @@ class BillDetailsDataSource extends DataGridSource {
     var packingFee = cells[12].value == null ? "-" : cells[12].value.toString();
     var rowColor = waybillCode.toLowerCase().startsWith(RegExp('[0-9]'))?Colors.white:Colors.black12;
     var highlightColor = const Color.fromARGB(89, 90, 120, 82);
+    var highlightColor2 = Colors.orangeAccent;
     return DataGridRowAdapter(
       // cells: row.getCells().map<Widget>((dataGridCell) {
       //   return Container(
@@ -244,15 +256,23 @@ class BillDetailsDataSource extends DataGridSource {
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(0),
-            decoration: int.parse(itemKind)>5?BoxDecoration(color: highlightColor) :null,
-            child: Text(itemKind),
+            decoration:
+                itemKind == null || itemKind == 0? BoxDecoration(color: highlightColor2)
+                    : itemKind >5? BoxDecoration(color: highlightColor)
+                    :null
+            ,
+            child: Text(itemKindStr),
           ),
           //总件数
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(0),
-            decoration: int.parse(totalCount)>10?BoxDecoration(color: highlightColor) :null,
-            child: Text(totalCount),
+            decoration:
+                totalCount == null? const BoxDecoration(color: Colors.red)
+                :totalCount == 0 ?  BoxDecoration(color: highlightColor2)
+                :totalCount >10 ?  BoxDecoration(color: highlightColor)
+                    : null,
+            child: Text(totalCountStr),
           ),
           //被托管者
           Container(
