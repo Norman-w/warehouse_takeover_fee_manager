@@ -8,8 +8,8 @@ import '../../utils/time.dart';
 
 
 class SearchArea extends StatefulWidget {
-  const SearchArea({super.key});
-
+  final VoidCallback? onClickedSearchBtn;
+  const SearchArea({super.key,this.onClickedSearchBtn});
   @override
   State<SearchArea> createState() => _SearchAreaState();
 }
@@ -332,9 +332,15 @@ class _SearchAreaState extends State<SearchArea> {
           ),
         ),
 
+        //查询按钮
         ElevatedButton(
           child: const Text('查询'),
-          onPressed: () => Navigator.pushNamed(context, '/test2'),
+          onPressed: () {
+            if(widget.onClickedSearchBtn!=null)
+              {
+                widget.onClickedSearchBtn!();
+              }
+          },
         ),
       ],
     );
