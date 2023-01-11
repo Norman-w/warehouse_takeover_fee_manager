@@ -3,12 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:warehouse_takeover_fee_manager/SDK/API/WarehouseTakeover/WarehouseTakeoverBillDetailsGetRequest.dart';
 
 import '../../utils/time.dart';
 
+typedef OnClickedSearchBtnCallback = Function(WareHouseTakeOverBillDetailsGetRequest req);
 
 class SearchArea extends StatefulWidget {
-  final VoidCallback? onClickedSearchBtn;
+  final OnClickedSearchBtnCallback? onClickedSearchBtn;
   const SearchArea({super.key,this.onClickedSearchBtn});
   @override
   State<SearchArea> createState() => _SearchAreaState();
@@ -338,7 +340,16 @@ class _SearchAreaState extends State<SearchArea> {
           onPressed: () {
             if(widget.onClickedSearchBtn!=null)
               {
-                widget.onClickedSearchBtn!();
+                var req = WareHouseTakeOverBillDetailsGetRequest(
+                    PageNum: 0,
+                    PageSize: 100,
+                  Pid: pid,
+                  WaybillCode: waybillCode,
+                  StartSendTime: sendStartTime,
+                  EndSendTime: sendEndTime,
+                );
+
+                widget.onClickedSearchBtn!(req);
               }
           },
         ),

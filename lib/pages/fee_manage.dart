@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../SDK/API/WarehouseTakeover/WarehouseTakeoverBillDetailsGetRequest.dart';
 import '../components/container_with_floating_draggable_btn.dart';
 import '../components/bill_detail_list.dart';
 import '../components/home/search_area.dart';
@@ -21,17 +22,28 @@ class FeeManage extends StatefulWidget {
 }
 
 class _FeeManageState extends State<FeeManage> {
-  Drawer drawer = Drawer(
-    child: Scaffold(
-      appBar: AppBar(
-        title: const Text('筛选条件'),
-      ),
-      body: SearchArea(),
-    ),
-  );
+  WareHouseTakeOverBillDetailsGetRequest request = WareHouseTakeOverBillDetailsGetRequest(PageNum: 0,PageSize: 10);
 
   @override
   Widget build(BuildContext context) {
+    Drawer drawer = Drawer(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('筛选条件'),
+        ),
+        body: SearchArea(
+          onClickedSearchBtn:
+              (req)
+          {
+            setState(() {
+              request = req;
+            });
+          },
+        ),
+      ),
+    );
+
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -58,17 +70,6 @@ class _FeeManageState extends State<FeeManage> {
                     Scaffold.of(context).openDrawer();
                   },
                 ),
-                // ElevatedButton(
-                //   style: headerBtnStyle,
-                //   child: const Text('载入表格'),
-                //   //这里注意 _openXlsFile 和 _openXlsFile(context) 不一样.前者是直接赋值指针,调用不起来.后者是在回调时调用回调.
-                //   onPressed: () => _openXlsFile(context),
-                // ),
-                // ElevatedButton(
-                //   style: headerBtnStyle,
-                //   child: const Text('试算'),
-                //   onPressed: () => Navigator.pushNamed(context, '/test2'),
-                // ),
                 const SizedBox(
                   width: 10,
                 ),
@@ -79,7 +80,7 @@ class _FeeManageState extends State<FeeManage> {
       ),
       body: ContainerWithFloatingDraggableBtn(
         drawer: drawer,
-        child: const BillDetailList(),
+        child: BillDetailList(request:request),
       ),
     );
   }

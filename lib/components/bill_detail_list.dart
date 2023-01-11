@@ -9,14 +9,6 @@ import '../SDK/Model/WarehouseTakeoverBillDetail.dart';
 import '../SDK/SDKClient.dart';
 import '../utils/time.dart';
 
-//组件声明
-class BillDetailList extends StatefulWidget {
-  const BillDetailList({Key? key}) : super(key: key);
-
-  @override
-  State<BillDetailList> createState() => _BillDetailListState();
-}
-
 
 
 //region sdk客户端
@@ -30,107 +22,107 @@ SDKClient sdkClient = SDKClient(
 //也可以跟row信息一样在异步数据返回后调用获取列信息.没有发现影响性能.
 getDataGridColumns(){
   return <GridColumn>[
-  GridColumn(
-      width: 80,
-      columnName: '编号',
-      label: Container(
-          padding: const EdgeInsets.all(5.0),
-          alignment: Alignment.centerLeft,
-          child: const Text(
-            '编号',
-          ))),
-  GridColumn(
-      width: 80,
-      columnName: '包裹号',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text(
-            '包裹号',
-          ))),
-  GridColumn(
-      width: 120,
-      columnName: '创建时间',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text(
-            '创建时间',
-          ))),
-  GridColumn(
-      width: 120,
-      columnName: '发货时间',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text(
-            '发货时间',
-          ))),
-  GridColumn(
-      width: 200,
-      columnName: '快递单号',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text(
-            '快递单号',
-          ))),
-  GridColumn(
-      columnName: '商品种类',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text(
-            '商品种类',
-          ))),
-  GridColumn(
-      columnName: '总件数',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text('总件数'))),
+    GridColumn(
+        width: 80,
+        columnName: '编号',
+        label: Container(
+            padding: const EdgeInsets.all(5.0),
+            alignment: Alignment.centerLeft,
+            child: const Text(
+              '编号',
+            ))),
+    GridColumn(
+        width: 80,
+        columnName: '包裹号',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text(
+              '包裹号',
+            ))),
+    GridColumn(
+        width: 120,
+        columnName: '创建时间',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text(
+              '创建时间',
+            ))),
+    GridColumn(
+        width: 120,
+        columnName: '发货时间',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text(
+              '发货时间',
+            ))),
+    GridColumn(
+        width: 200,
+        columnName: '快递单号',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text(
+              '快递单号',
+            ))),
+    GridColumn(
+        columnName: '商品种类',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text(
+              '商品种类',
+            ))),
+    GridColumn(
+        columnName: '总件数',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('总件数'))),
     GridColumn(
         columnName: '被托管者',
         label: Container(
             padding: const EdgeInsets.all(16.0),
             alignment: Alignment.center,
             child: const Text('被托管者'))),
-  GridColumn(
-      columnName: '卖家',
-      width: 120,
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text('卖家'))),
-  GridColumn(
-      columnWidthMode: ColumnWidthMode.fill,
-      columnName: '重量',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text('重量'))),
-  GridColumn(
-      columnWidthMode: ColumnWidthMode.fill,
-      columnName: '泡重',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text('泡重'))),
-  GridColumn(
-      columnWidthMode: ColumnWidthMode.fill,
-      columnName: '快递费',
-      label: Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.center,
-          child: const Text('快递费'))),
-  GridColumn(
-      columnWidthMode: ColumnWidthMode.fill,
-      columnName: '包装费',
-      label: Container(
-          padding: const EdgeInsets.all(10.0),
-          alignment: Alignment.centerRight,
-          child: const Text('包装费'))),
-];
+    GridColumn(
+        columnName: '卖家',
+        width: 120,
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('卖家'))),
+    GridColumn(
+        columnWidthMode: ColumnWidthMode.fill,
+        columnName: '重量',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('重量'))),
+    GridColumn(
+        columnWidthMode: ColumnWidthMode.fill,
+        columnName: '泡重',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('泡重'))),
+    GridColumn(
+        columnWidthMode: ColumnWidthMode.fill,
+        columnName: '快递费',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('快递费'))),
+    GridColumn(
+        columnWidthMode: ColumnWidthMode.fill,
+        columnName: '包装费',
+        label: Container(
+            padding: const EdgeInsets.all(10.0),
+            alignment: Alignment.centerRight,
+            child: const Text('包装费'))),
+  ];
 }
 // var billDetailsColumns = getDataGridColumns();
 //endregion
@@ -151,21 +143,21 @@ class BillDetailsDataSource extends DataGridSource {
     if (billDetails != null) {
       billDetailsRows = billDetails
           .map((e) => DataGridRow(cells: [
-                // DataGridCell<int>(columnName: "账单号", value: e.Id),
-                DataGridCell<int>(columnName: "编号", value: e.Id),
-                DataGridCell(columnName: "包裹号", value: e.Pid),
-                DataGridCell(columnName: "创建时间", value: timeToCNDay(e.BagCreateTime)),
-                DataGridCell(columnName: "发货时间", value: timeToCNDay(e.BagSendTime)),
-                DataGridCell(columnName: "快递单号", value: e.WaybillCode),
-                DataGridCell(columnName: "商品种类", value: e.ItemKindCount),
-                DataGridCell(columnName: "总件数", value: e.TotalItemCount),
-                DataGridCell(columnName: "背托管者", value: e.Assignor),
-                DataGridCell(columnName: "卖家", value: e.SellerId),
-                DataGridCell(columnName: "重量", value: e.Weight),
-                DataGridCell(columnName: "泡重", value: e.VolumetricWeight),
-                DataGridCell(columnName: "快递费", value: e.PostFee),
-                DataGridCell(columnName: "包装费", value: e.PackingFee),
-              ]))
+        // DataGridCell<int>(columnName: "账单号", value: e.Id),
+        DataGridCell<int>(columnName: "编号", value: e.Id),
+        DataGridCell(columnName: "包裹号", value: e.Pid),
+        DataGridCell(columnName: "创建时间", value: timeToCNDay(e.BagCreateTime)),
+        DataGridCell(columnName: "发货时间", value: timeToCNDay(e.BagSendTime)),
+        DataGridCell(columnName: "快递单号", value: e.WaybillCode),
+        DataGridCell(columnName: "商品种类", value: e.ItemKindCount),
+        DataGridCell(columnName: "总件数", value: e.TotalItemCount),
+        DataGridCell(columnName: "背托管者", value: e.Assignor),
+        DataGridCell(columnName: "卖家", value: e.SellerId),
+        DataGridCell(columnName: "重量", value: e.Weight),
+        DataGridCell(columnName: "泡重", value: e.VolumetricWeight),
+        DataGridCell(columnName: "快递费", value: e.PostFee),
+        DataGridCell(columnName: "包装费", value: e.PackingFee),
+      ]))
           .toList();
     }
   }
@@ -199,17 +191,17 @@ class BillDetailsDataSource extends DataGridSource {
     var rowColor = waybillCode.toLowerCase().startsWith(RegExp('[0-9]'))?Colors.white:Colors.black12;
     var highlightColor = const Color.fromARGB(89, 90, 120, 82);
     return DataGridRowAdapter(
-        // cells: row.getCells().map<Widget>((dataGridCell) {
-        //   return Container(
-        //     // alignment: (dataGridCell.columnName == '编号' || dataGridCell.columnName == '包裹号')
-        //     //     ? Alignment.centerLeft
-        //     //     : Alignment.centerRight,
-        //     decoration:new BoxDecoration(color:index++%2==1?Colors.red:Colors.green),
-        //     alignment: Alignment.centerLeft,
-        //     padding: EdgeInsets.all(5.0),
-        //     child: Text(dataGridCell.value.toString()),
-        //   );
-        // }).toList());
+      // cells: row.getCells().map<Widget>((dataGridCell) {
+      //   return Container(
+      //     // alignment: (dataGridCell.columnName == '编号' || dataGridCell.columnName == '包裹号')
+      //     //     ? Alignment.centerLeft
+      //     //     : Alignment.centerRight,
+      //     decoration:new BoxDecoration(color:index++%2==1?Colors.red:Colors.green),
+      //     alignment: Alignment.centerLeft,
+      //     padding: EdgeInsets.all(5.0),
+      //     child: Text(dataGridCell.value.toString()),
+      //   );
+      // }).toList());
         cells: [
           //编号
           Container(
@@ -306,8 +298,8 @@ class BillDetailsDataSource extends DataGridSource {
         ],
         //默认行颜色
         // color: Colors.red
-      //条件行颜色
-      color:rowColor
+        //条件行颜色
+        color:rowColor
     );
   }
 }
@@ -322,15 +314,28 @@ getDataGridRows(futureBuilderSnapshot)
 }
 //endregion
 
+
+
+//组件声明
+class BillDetailList extends StatefulWidget {
+  const BillDetailList({Key? key, required this.request}) : super(key: key);
+  final WareHouseTakeOverBillDetailsGetRequest request;
+  @override
+  State<BillDetailList> createState() => _BillDetailListState();
+}
+
 //region 动态构建组件
 class _BillDetailListState extends State<BillDetailList> {
   @override
   Widget build(BuildContext context) {
-    var req = WareHouseTakeOverBillDetailsGetRequest(PageNum: 1)
-      ..StartSendTime = DateTime(2022, 4, 1)
-      ..EndSendTime = DateTime(2022, 10, 1)
-      ..TakeoverWhoUserId = 100002
-      ..PageSize = 40;
+    print('构建');
+    print(widget.request);
+    var req = widget.request;
+    // var req = WareHouseTakeOverBillDetailsGetRequest(PageNum: 1)
+    //   ..StartSendTime = DateTime(2022, 4, 1)
+    //   ..EndSendTime = DateTime(2022, 10, 1)
+    //   ..TakeoverWhoUserId = 100002
+    //   ..PageSize = 40;
     var session = context.read<AccountModel>().session;
     // print('你的session');
     // print(session);
