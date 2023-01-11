@@ -1,14 +1,14 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
-import '../components/bill_detail_list.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
 import '../components/excel_previewer/sheet_previewer_v2.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
-import '../common/container_with_floating_draggable_btn.dart';
-import '../components/home/search_area.dart';
+import 'cost_manage.dart';
+import 'cost_upload.dart';
+import 'fee_manage.dart';
 
 var tabBarItems = const [
   TabItem(icon: Icons.home, title: '托管账单查询'),
@@ -21,9 +21,11 @@ var tabBarItems = const [
 getPage(int pageIndex) {
   switch (pageIndex) {
     case 0:
-      return const BillDetailList();
+      return const FeeManage();
     case 1:
-      return const Text('第一页');
+      return const CostManage();
+    case 2:
+      return const CostUpload();
   }
   return Text('$pageIndex');
 }
@@ -93,99 +95,16 @@ class _HomeState extends State<Home> {
     }
   }
 
-  final ButtonStyle headerBtnStyle = ElevatedButton.styleFrom(
-    // ignore: deprecated_member_use
-    primary: Colors.lightGreen,
-    // ignore: deprecated_member_use
-    onPrimary: Colors.white,
-  );
   Widget currentPage = getPage(0);
 
   //const ColorfulLoading();
 
-  Drawer drawer = Drawer(
-    backgroundColor: Colors.red,
-    child: Scaffold(
-      appBar: AppBar(
-        title: const Text('筛选条件'),
-      ),
-      body: SearchArea(),
-    ),
-  );
   // bool showDrawer = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //  floatingActionButton:
-      // ClipOval(
-      //   child: Container(
-      //     color: Colors.red,
-      //     width: 50,
-      //     height: 50,
-      //     child: Text('test'),
-      //   ),
-      // )
-      //  ,
-      appBar: AppBar(
-        // flexibleSpace :Text('3333'),
-        // leading: Text('leading'),
-
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('仓储托管费用管理'),
-            ButtonBar(
-              children: [
-                // SearchArea(),
-                ElevatedButton(
-                  style: headerBtnStyle,
-                  child: const Text('计算费用'),
-                  onPressed: () => Navigator.pushNamed(context, '/test2'),
-                ),
-                ElevatedButton(
-                  style: headerBtnStyle,
-                  child: const Text('上传到服务器'),
-                  onPressed: () => Navigator.pushNamed(context, '/test2'),
-                ),
-                ElevatedButton(
-                  style: headerBtnStyle,
-                  child: const Text('打开搜索选项'),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-                // ElevatedButton(
-                //   style: headerBtnStyle,
-                //   child: const Text('载入表格'),
-                //   //这里注意 _openXlsFile 和 _openXlsFile(context) 不一样.前者是直接赋值指针,调用不起来.后者是在回调时调用回调.
-                //   onPressed: () => _openXlsFile(context),
-                // ),
-                // ElevatedButton(
-                //   style: headerBtnStyle,
-                //   child: const Text('试算'),
-                //   onPressed: () => Navigator.pushNamed(context, '/test2'),
-                // ),
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
-          ],
-        ),
-        // actions: [
-        //   Text('12'),Text('12'),Text('12'),Text('12'),
-        // ],
-      ),
-      body: ContainerWithFloatingDraggableBtn(
-        drawer: drawer,
-        child: currentPage,
-        // onClickOpenDrawerBtn: () {
-        //   setState(() {
-        //     showDrawer = !showDrawer;
-        //   });
-        // },
-      ),
+      body: currentPage,
       bottomNavigationBar:
           //region 底部导航条定义
           ConvexAppBar(
