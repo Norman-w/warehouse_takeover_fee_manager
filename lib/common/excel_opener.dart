@@ -5,7 +5,7 @@ import 'package:file_selector_platform_interface/file_selector_platform_interfac
 
 import '../components/excel_previewer/sheet_previewer_v2.dart';
 
-Future<void> _openXlsFile(BuildContext context) async {
+Future<void> openXlsFile(BuildContext context) async {
   const XTypeGroup typeGroup = XTypeGroup(
     label: 'images',
     extensions: <String>['xls', 'xlsx'],
