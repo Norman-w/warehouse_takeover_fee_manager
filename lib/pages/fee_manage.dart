@@ -22,7 +22,6 @@ class FeeManage extends StatefulWidget {
 
 class _FeeManageState extends State<FeeManage> {
   Drawer drawer = Drawer(
-    // backgroundColor: Colors.red,
     child: Scaffold(
       appBar: AppBar(
         title: const Text('筛选条件'),
@@ -35,9 +34,6 @@ class _FeeManageState extends State<FeeManage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // flexibleSpace :Text('3333'),
-        // leading: Text('leading'),
-
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -80,18 +76,10 @@ class _FeeManageState extends State<FeeManage> {
             ),
           ],
         ),
-        // actions: [
-        //   Text('12'),Text('12'),Text('12'),Text('12'),
-        // ],
       ),
       body: ContainerWithFloatingDraggableBtn(
         drawer: drawer,
-        child: BillDetailList(),
-        // onClickOpenDrawerBtn: () {
-        //   setState(() {
-        //     showDrawer = !showDrawer;
-        //   });
-        // },
+        child: const BillDetailList(),
       ),
     );
   }
