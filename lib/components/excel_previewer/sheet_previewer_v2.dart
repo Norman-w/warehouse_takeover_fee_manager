@@ -17,7 +17,9 @@ class SheetPreviewerV2 extends StatefulWidget {
 
   int? endRowIndex;
 
-  SheetPreviewerV2({Key? key, required this.sheet}) : super(key: key);
+  final bool showTitle;
+
+  SheetPreviewerV2({Key? key, required this.sheet, this.showTitle=false}) : super(key: key);
 
   @override
   State<SheetPreviewerV2> createState() => _SheetPreviewerV2State();
@@ -70,29 +72,30 @@ class _SheetPreviewerV2State extends State<SheetPreviewerV2> {
 
   @override
   Widget build(BuildContext context) {
-    return
-    Scaffold(
-      appBar: AppBar(
-        title: const Text('文件预览'),
-      ),
-      body:Container(
+    var container = Container(
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(color: Colors.white),
       // padding: EdgeInsetsGeometry.infinity,
       child:SfDataGrid(
-              onCellDoubleTap: onCellDoubleTap,
-              selectionMode: SelectionMode.single,
-              navigationMode: GridNavigationMode.cell,
-              columnWidthMode: ColumnWidthMode.fill,
-              // source: getDataGridRows(sheet),
-              source: getDataGridRowsWithHighlight(widget.sheet,
-                  widget.startColIndex,
-                  widget.endColIndex,
-                  widget.startRowIndex,
-                  widget.endRowIndex),
-              columns: getDataGridColumns(widget.sheet)),
-      )
+          onCellDoubleTap: onCellDoubleTap,
+          selectionMode: SelectionMode.single,
+          navigationMode: GridNavigationMode.cell,
+          columnWidthMode: ColumnWidthMode.fill,
+          // source: getDataGridRows(sheet),
+          source: getDataGridRowsWithHighlight(widget.sheet,
+              widget.startColIndex,
+              widget.endColIndex,
+              widget.startRowIndex,
+              widget.endRowIndex),
+          columns: getDataGridColumns(widget.sheet)),
     );
+
+    //如果显示标题就用Scaffold包一下 如果不显示直接用container
+    var ret  = widget.showTitle? Scaffold(
+        appBar:AppBar(
+        title: const Text('文件预览'),
+    )): container;
+    return ret;
   }
 }
 
