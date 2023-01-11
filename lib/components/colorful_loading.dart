@@ -13,32 +13,21 @@ const colorizeTextStyle = TextStyle(
   fontSize: 50.0,
   fontFamily: 'Horizon',
 );
-
+const defaultWaitingTexts = [
+  "Loading...","Please", "Wait"
+];
 class ColorfulLoading extends StatelessWidget {
-  const ColorfulLoading({Key? key}) : super(key: key);
+  final List<String>? texts;
+  const ColorfulLoading({Key? key, this.texts}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<String> showingTexts = texts?? defaultWaitingTexts;
+    var textsElems = showingTexts.map((e) => ColorizeAnimatedText(e, textStyle: colorizeTextStyle, colors: colorizeColors)).toList();
     return
     Center(child:
       AnimatedTextKit(
-      animatedTexts: [
-        ColorizeAnimatedText(
-          'Loading...',
-          textStyle: colorizeTextStyle,
-          colors: colorizeColors,
-        ),
-        ColorizeAnimatedText(
-          'Please',
-          textStyle: colorizeTextStyle,
-          colors: colorizeColors,
-        ),
-        ColorizeAnimatedText(
-          'Wait',
-          textStyle: colorizeTextStyle,
-          colors: colorizeColors,
-        ),
-      ],
+      animatedTexts: textsElems,
       isRepeatingAnimation: true,
       onTap: () {
         print("Tap Event");
