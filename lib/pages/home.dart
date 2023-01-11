@@ -7,7 +7,7 @@ import 'package:file_selector_platform_interface/file_selector_platform_interfac
 import '../components/excel_previewer/sheet_previewer_v2.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
-import '../components/home/content_container.dart';
+import '../common/container_with_floating_draggable_btn.dart';
 import '../components/home/search_area.dart';
 
 var tabBarItems = const [
@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
       body: SearchArea(),
     ),
   );
-  bool showDrawer = false;
+  // bool showDrawer = false;
 
   @override
   Widget build(BuildContext context) {
@@ -177,15 +177,14 @@ class _HomeState extends State<Home> {
         //   Text('12'),Text('12'),Text('12'),Text('12'),
         // ],
       ),
-      body: ContentContainer(
-        currentPage: currentPage,
-        showDrawer: showDrawer,
+      body: ContainerWithFloatingDraggableBtn(
         drawer: drawer,
-        onClickOpenDrawerBtn: () {
-          setState(() {
-            showDrawer = !showDrawer;
-          });
-        },
+        child: currentPage,
+        // onClickOpenDrawerBtn: () {
+        //   setState(() {
+        //     showDrawer = !showDrawer;
+        //   });
+        // },
       ),
       bottomNavigationBar:
           //region 底部导航条定义

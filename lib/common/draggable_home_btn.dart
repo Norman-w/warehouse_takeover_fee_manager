@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utils/widget.dart';
+import '../utils/widget.dart';
 
 ///可拖动组件的位置信息.
 class DraggableWidgetPosition
