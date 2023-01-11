@@ -1,6 +1,4 @@
-/**
- * 搜索托管账单用的搜索条
- */
+/// 搜索托管账单用的搜索条
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +8,8 @@ import '../../utils/time.dart';
 
 
 class SearchArea extends StatefulWidget {
+  const SearchArea({super.key});
+
   @override
   State<SearchArea> createState() => _SearchAreaState();
 }
@@ -63,15 +63,15 @@ class _SearchAreaState extends State<SearchArea> {
         //     ),
         //   ),
         // ),
-        Container(
+        SizedBox(
           // decoration: BoxDecoration(color: Colors.red),
           // width: 150,
           height: 55,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               onChanged: (e) {
-                print(e);
+                // print(e);
                 setState(() {
                   pid = int.tryParse(e);
                 });
@@ -98,15 +98,15 @@ class _SearchAreaState extends State<SearchArea> {
         // Text(
         //   '$pid',
         // ),
-        Container(
+        SizedBox(
           // decoration: BoxDecoration(color: Colors.red),
           // width: 250,
           height: 55,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               onChanged: (e) {
-                print(e);
+                // print(e);
                 setState(() {
                   waybillCode =e;
                 });
@@ -128,15 +128,15 @@ class _SearchAreaState extends State<SearchArea> {
             ),
           ),
         ),
-        Container(
+        SizedBox(
           // decoration: BoxDecoration(color: Colors.red),
           // width: 100,
           height: 55,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               onChanged: (e) {
-                print(e);
+                // print(e);
                 setState(() {
                   pid = int.tryParse(e);
                 });
@@ -164,7 +164,7 @@ class _SearchAreaState extends State<SearchArea> {
           Row(
           mainAxisAlignment : MainAxisAlignment.spaceAround,
             children: [
-              Container(
+              SizedBox(
                 // width: 100,
                 height: 63,
                 // decoration: BoxDecoration(border: Border.all(color:Colors.red,width:1)),
@@ -173,28 +173,21 @@ class _SearchAreaState extends State<SearchArea> {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      // decoration: BoxDecoration(border: Border.all(color:Colors.red,width:1)),
-                      child:
-                      Text("只看包装费>1",
-                        style: TextStyle(fontSize: 12),
-                      ),
+                    const Text("只看包装费>1",
+                      style: TextStyle(fontSize: 12),
                     ),
-                    Container(
-                      // decoration: BoxDecoration(border: Border.all(color:Colors.red,width:1)),
-                      child:Switch(
-                        // activeColor: Colors.lightGreenAccent,
-                        // inactiveThumbColor: Colors.grey,
-                        value:onlyFeeMoreThan1, onChanged: (bool value) {
-                        setState(() {
-                          onlyFeeMoreThan1 = value;
-                        });
-                      },),
-                    ),
+                    Switch(
+                      // activeColor: Colors.lightGreenAccent,
+                      // inactiveThumbColor: Colors.grey,
+                      value:onlyFeeMoreThan1, onChanged: (bool value) {
+                      setState(() {
+                        onlyFeeMoreThan1 = value;
+                      });
+                    },),
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 // width: 100,
                 height: 63,
                 // decoration: BoxDecoration(border: Border.all(color:Colors.red,width:1)),
@@ -203,24 +196,17 @@ class _SearchAreaState extends State<SearchArea> {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      // decoration: BoxDecoration(border: Border.all(color:Colors.red,width:1)),
-                      child:
-                      Text("只看无快递信息",
-                        style: TextStyle(fontSize: 12),
-                      ),
+                    const Text("只看无快递信息",
+                      style: TextStyle(fontSize: 12),
                     ),
-                    Container(
-                      // decoration: BoxDecoration(border: Border.all(color:Colors.red,width:1)),
-                      child:Switch(
-                        // activeColor: Colors.lightGreenAccent,
-                        // inactiveThumbColor: Colors.grey,
-                        value:onlyNoWaybillCode, onChanged: (bool value) {
-                        setState(() {
-                          onlyNoWaybillCode = value;
-                        });
-                      },),
-                    ),
+                    Switch(
+                      // activeColor: Colors.lightGreenAccent,
+                      // inactiveThumbColor: Colors.grey,
+                      value:onlyNoWaybillCode, onChanged: (bool value) {
+                      setState(() {
+                        onlyNoWaybillCode = value;
+                      });
+                    },),
                   ],
                 ),
               ),
@@ -230,15 +216,15 @@ class _SearchAreaState extends State<SearchArea> {
 
 
 
-        Container(
+        SizedBox(
           // decoration: BoxDecoration(color: Colors.red),
           // width: 130,
           height: 55,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               onChanged: (e) {
-                print(e);
+                // print(e);
                 setState(() {
                   pid = int.tryParse(e);
                 });
@@ -261,20 +247,20 @@ class _SearchAreaState extends State<SearchArea> {
           ),
         ),
 
-        Container(
+        SizedBox(
           // decoration: BoxDecoration(color: Colors.red),
           // width: 130,
           height: 55,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               controller: _controller,
               onTap: ()async{
-                print('点击了');
+                // print('点击了');
                 await showDialog<void>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
-                    title: Text('发货起止时间选择'),
+                    title: const Text('发货起止时间选择'),
                     // On web the filePath is a blob url
                     // while on other platforms it is a system path.
                     content:
@@ -284,14 +270,14 @@ class _SearchAreaState extends State<SearchArea> {
                           child: SfDateRangePicker(
                             onSelectionChanged: (e){
                               //e.value才是值
-                              print(e.value);
+                              // print(e.value);
                             },
                             onCancel: (){
                               Navigator.pop(context);
                             },
                             onSubmit: (e){
                               //直接就是值
-                              print(e);
+                              // print(e);
                               // var range = PickerDateRange(DateTime(1970,1,1,0,0,0), DateTime(1970,1,1,0,0,0));
                               var range = e as PickerDateRange;
                               sendEndTime = range.endDate;
@@ -323,7 +309,7 @@ class _SearchAreaState extends State<SearchArea> {
                 );
               },
               onChanged: (e) {
-                print(e);
+                // print(e);
                 setState(() {
                   pid = int.tryParse(e);
                 });
