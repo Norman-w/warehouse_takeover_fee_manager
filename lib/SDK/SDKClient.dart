@@ -38,6 +38,23 @@ class SDKClient
       throw Exception('Failed to load post~~~~~');
     }
   }
+  ///同步执行请求
+  T executeSync<T extends BaseResponse>({required BaseRequest<T> request, String? session,Method? method})
+  {
+    T rsp = EmptyResponse() as dynamic;
+    print('初始化response完毕');
+    // Future.sync(() => {
+    execute(request: request, session:session, method:method).then((response){
+      print('同步请求异步完毕');
+      rsp = response;
+    // })
+    }).catchError((e){
+      print("error when execute sync.");
+      print(e);
+    });
+    print('返回结果');
+    return rsp;
+  }
   //get请求链接拼接方法
   Uri buildGetUri<T extends BaseResponse>(BaseRequest<T> request, String? session)
   {
