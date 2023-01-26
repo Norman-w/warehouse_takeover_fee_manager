@@ -366,6 +366,21 @@ class _BillDetailListState extends State<BillDetailList> {
     // print(session);
     var rsp = sdkClient.execute(request: req, session:session);
 
+    //region 一个response可以多个then,也就是一个future可以多个then,都会执行.
+    // 在return之前做的相关的判断和弹窗等操作都可以直接使用,不需要使用Future.delayed来延迟触发.因为build中的return只要直接返回内容即可.
+    // print(rsp.then((value) => print(value.Details.length)));
+    // print(rsp.then((value) => print(value.Details.length-1)));
+    rsp.then((value) {
+      if (value.Details.isEmpty) {
+        MotionToast.warning(
+          position: MotionToastPosition.center,
+          title:  const Text("未查询到记录"),
+          description:  const Text("请更换条件重新查询"),
+        ).show(context);
+      }
+    });
+    //endregion
+
     return Padding(
         padding: const EdgeInsets.all(10),
         // padding: EdgeInsetsGeometry.infinity,
@@ -381,6 +396,7 @@ class _BillDetailListState extends State<BillDetailList> {
               var billDetailsColumns = getDataGridColumns();
               //行数据
               var billDetailsRows = getDataGridRows(snapshot);
+              //region 正确的用法不要在return中,return中应当直拼接样式内容,不要有对state的操作.参见rsp.then((value) {那一行
               if(snapshot.hasData
                   && snapshot.data!= null
                   && snapshot.data!.Details.isEmpty
@@ -399,28 +415,29 @@ class _BillDetailListState extends State<BillDetailList> {
                   //   });
                   // });
                   //endregion
-
                   //region 使用motion toast来显示提示,但是也需要借助 Future.delayed,设置延迟为0的时候,有一次出现了黑屏没内容,正常时候是没有问题的.
-                  Future.delayed(const Duration(milliseconds: 0)).then((value){
-
-                    MotionToast.warning(
-                      position: MotionToastPosition.center,
-                      title:  const Text("未查询到记录"),
-                      description:  const Text("请更换条件重新查询"),
-                    ).show(context);
-
-                  }
-                  );
+                  // Future.delayed(const Duration(milliseconds: 0)).then((value){
+                  //
+                  //   MotionToast.warning(
+                  //     position: MotionToastPosition.center,
+                  //     title:  const Text("未查询到记录"),
+                  //     description:  const Text("请更换条件重新查询"),
+                  //   ).show(context);
+                  //
+                  // }
+                  // );
                   //endregion
-
-                  // //region 同步执行没有延迟的方式 不成功.因为在build的时候不能再设置state
+                  //region 同步执行没有延迟的方式 不成功.因为在build的时候不能再设置state
                   // Future.sync(() => MotionToast.warning(
                   //   position: MotionToastPosition.center,
                   //   title:  const Text("未查询到记录"),
                   //   description:  const Text("请更换条件重新查询"),
                   // ).show(context));
-                  // //endregion
+                  //endregion
                 }
+              //最终的解决方法是不要在这里定义.因为FutureBuilder执行到这里的时候正在build,再显示弹窗的话就是build+build
+              //所以应该是交给外面处理,也就是说进入到FutureBuilder这里和rsp.then等效.但是then中不会导致FutureBuilder错乱
+              //endregion
               return SfDataGrid(
                   // rowHeight: 40,
                   columnWidthMode: ColumnWidthMode.none,
