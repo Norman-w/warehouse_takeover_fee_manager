@@ -1,7 +1,11 @@
+
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:warehouse_takeover_fee_manager/common/global.dart';
+import 'package:warehouse_takeover_fee_manager/components/colorful_loading.dart';
 
 import '../SDK/API/WarehouseTakeover/WarehouseTakeoverBillDetailsGetRequest.dart';
 import '../SDK/API/WarehouseTakeover/WarehouseTakeoverBillDetailsGetResponse.dart';
@@ -324,13 +328,14 @@ class BillDetailsDataSource extends DataGridSource {
   }
 }
 //因为FutureBuilder属于Promise/Task,需要再网络异步返回以后才能获取到snapshot对象,所以调用一定要在FutureBuilder的回调中.
-getDataGridRows(futureBuilderSnapshot)
-{
-  var ds = BillDetailsDataSource();
+BillDetailsDataSource? getDataGridRows(futureBuilderSnapshot) {
+  BillDetailsDataSource ds;
   if (futureBuilderSnapshot.hasData && futureBuilderSnapshot.data != null) {
-    ds = BillDetailsDataSource(billDetails: futureBuilderSnapshot.data?.Details);
+    ds =
+        BillDetailsDataSource(billDetails: futureBuilderSnapshot.data?.Details);
+    return ds;
   }
-  return ds;
+  return null;
 }
 //endregion
 
@@ -368,14 +373,58 @@ class _BillDetailListState extends State<BillDetailList> {
           FutureBuilder<WareHouseTakeOverBillDetailsGetResponse>(
             future: rsp,
             builder: (context, snapshot) {
+              if(snapshot.connectionState != ConnectionState.done)
+              {
+                return const ColorfulLoading(texts: ['查询中...','请稍后...']);
+              }
               //列数据
               var billDetailsColumns = getDataGridColumns();
               //行数据
               var billDetailsRows = getDataGridRows(snapshot);
+              if(snapshot.hasData
+                  && snapshot.data!= null
+                  && snapshot.data!.Details.isEmpty
+              )
+                {
+                  //region log
+                  // print('没有获取到数据');
+                  // print(DateTime.now());
+                  // print(snapshot);
+                  //endregion
+                  //region 可以用的写法,但是很别扭.不用延迟不行
+                  // Future.delayed(const Duration(milliseconds: 0)).then((value){
+                  //   // syncFunc.then((value) => null);
+                  //   showDialog(context: context, builder: (BuildContext ctx){
+                  //     return const Text("Empyt");
+                  //   });
+                  // });
+                  //endregion
+
+                  //region 使用motion toast来显示提示,但是也需要借助 Future.delayed,设置延迟为0的时候,有一次出现了黑屏没内容,正常时候是没有问题的.
+                  Future.delayed(const Duration(milliseconds: 0)).then((value){
+
+                    MotionToast.warning(
+                      position: MotionToastPosition.center,
+                      title:  const Text("未查询到记录"),
+                      description:  const Text("请更换条件重新查询"),
+                    ).show(context);
+
+                  }
+                  );
+                  //endregion
+
+                  // //region 同步执行没有延迟的方式 不成功.因为在build的时候不能再设置state
+                  // Future.sync(() => MotionToast.warning(
+                  //   position: MotionToastPosition.center,
+                  //   title:  const Text("未查询到记录"),
+                  //   description:  const Text("请更换条件重新查询"),
+                  // ).show(context));
+                  // //endregion
+                }
               return SfDataGrid(
                   // rowHeight: 40,
                   columnWidthMode: ColumnWidthMode.none,
-                  source: billDetailsRows,
+                  source: billDetailsRows?? BillDetailsDataSource(),
                   columns: billDetailsColumns);
             },
           ),
