@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names, file_names
-
 abstract class BaseResponse {
   /// <summary>
   /// 错误码
@@ -38,5 +37,13 @@ abstract class BaseResponse {
         ErrMsg?.isNotEmpty ??
         SubErrMsg?.isNotEmpty ??
         false;
+  }
+}
+
+class EmptyResponse extends BaseResponse
+{
+  EmptyResponse()
+  {
+    ErrMsg = "未实例化的Response";
   }
 }
