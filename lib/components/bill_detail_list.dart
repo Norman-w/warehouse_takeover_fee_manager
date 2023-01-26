@@ -397,11 +397,11 @@ class _BillDetailListState extends State<BillDetailList> {
               //行数据
               var billDetailsRows = getDataGridRows(snapshot);
               //region 正确的用法不要在return中,return中应当直拼接样式内容,不要有对state的操作.参见rsp.then((value) {那一行
-              if(snapshot.hasData
-                  && snapshot.data!= null
-                  && snapshot.data!.Details.isEmpty
-              )
-                {
+              // if(snapshot.hasData
+              //     && snapshot.data!= null
+              //     && snapshot.data!.Details.isEmpty
+              // )
+              //   {
                   //region log
                   // print('没有获取到数据');
                   // print(DateTime.now());
@@ -434,7 +434,7 @@ class _BillDetailListState extends State<BillDetailList> {
                   //   description:  const Text("请更换条件重新查询"),
                   // ).show(context));
                   //endregion
-                }
+                // }
               //最终的解决方法是不要在这里定义.因为FutureBuilder执行到这里的时候正在build,再显示弹窗的话就是build+build
               //所以应该是交给外面处理,也就是说进入到FutureBuilder这里和rsp.then等效.但是then中不会导致FutureBuilder错乱
               //endregion
